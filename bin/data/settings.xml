@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<settings>
+	<ledStrips>
+		<ledStrip xStart="0.05" yStart="0.6" xStop="0.05" yStop="0.2" ledCount="60" id="0"></ledStrip>
+		<ledStrip xStart="0.1" yStart="0.8" xStop="0.1" yStop="0.4" ledCount="60" id="1"></ledStrip>
+		<ledStrip xStart="0.15" yStart="0.8" xStop="0.15" yStop="0.55" ledCount="30" id="2"></ledStrip>
+		<ledStrip xStart="0.39" yStart="0.6" xStop="0.39" yStop="0.2" ledCount="60" id="3"></ledStrip>
+		<ledStrip xStart="0.42" yStart="0.7" xStop="0.42" yStop="0.5" ledCount="30" id="4"></ledStrip>
+		<ledStrip xStart="0.45" yStart="0.6" xStop="0.45" yStop="0.2" ledCount="60" id="5"></ledStrip>
+		<ledStrip xStart="0.52" yStart="0.6" xStop="0.52" yStop="0.2" ledCount="60" id="6"></ledStrip>
+		<ledStrip xStart="0.56" yStart="0.7" xStop="0.56" yStop="0.5" ledCount="30" id="7"></ledStrip>
+		<ledStrip xStart="0.59" yStart="0.6" xStop="0.59" yStop="0.2" ledCount="60" id="8"></ledStrip>
+		<ledStrip xStart="0.83" yStart="0.8" xStop="0.83" yStop="0.55" ledCount="30" id="9"></ledStrip>
+		<ledStrip xStart="0.9" yStart="0.8" xStop="0.9" yStop="0.4" ledCount="60" id="10"></ledStrip>
+		<ledStrip xStart="0.95" yStart="0.6" xStop="0.95" yStop="0.2" ledCount="60" id="11"></ledStrip>		
+	</ledStrips>
+	<videos>
+		<video path="Aire y Niebla Test.mov">
+			<keyFrame>0</keyFrame>
+			<keyFrame>170</keyFrame>
+			<keyFrame>184</keyFrame>
+			<keyFrame>354</keyFrame>
+			<keyFrame>536</keyFrame>
+			<keyFrame>706</keyFrame>
+			<keyFrame>875</keyFrame>
+		</video>
+		<video path="Aire_2.mov">
+			<keyFrame>0</keyFrame>
+			<keyFrame>20</keyFrame>
+			<keyFrame>190</keyFrame>
+			<keyFrame>204</keyFrame>
+			<keyFrame>374</keyFrame>
+			<keyFrame>556</keyFrame>
+			<keyFrame>726</keyFrame>
+			<keyFrame>895</keyFrame>
+		</video>
+	</videos>
+</settings>
