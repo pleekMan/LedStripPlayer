@@ -55,6 +55,13 @@ void ofApp::keyPressed(int key){
         videoManager.toggleLoopSection();
     }
     
+    if (key == 'a') {
+        videoManager.jumpToPreviousVideo();
+    }
+    if (key == 's') {
+        videoManager.jumpToNextVideo();
+    }
+    
     if(key == 's'){
         //unsigned char *ledColor =  sampler.sampleLedStrip(0);
         

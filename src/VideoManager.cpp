@@ -11,8 +11,8 @@
 
 void VideoManager::initialize(ofXml *_settings){
     
-    guiAnchor = ofVec2f(10,10);
-    controllersSize = ofVec2f(200,100);
+    guiAnchor = ofVec2f(50,50);
+    controllersSize = ofVec2f(500,50);
     
     activeVideo = 0;
 
@@ -58,7 +58,7 @@ void VideoManager::buildVideoControllers(ofXml *settings){
         
         newVideoController.initialize(videoPath, keys, keyCount, &renderSurface);
         newVideoController.setSize(controllersSize.x, controllersSize.y);
-        ofVec2f pos = ofVec2f(guiAnchor.x + 10, guiAnchor.y + (i * (controllersSize.y + 10))); // EL +10 ES UN ESPACIO DE SEPARACION
+        ofVec2f pos = ofVec2f(guiAnchor.x + 10, guiAnchor.y + (i * (controllersSize.y + 50))); // EL +10 ES UN ESPACIO DE SEPARACION
         newVideoController.setPosition(pos.x, pos.y);
         
         videoControllers.push_back(newVideoController);
@@ -108,7 +108,7 @@ void VideoManager::render(){
     // SOME GUI SHIT
     ofNoFill();
     ofSetColor(0, 127, 127);
-    ofRect(guiAnchor, 500,500);
+    ofRect(guiAnchor, 700,700);
     
 }
 
@@ -122,6 +122,24 @@ void VideoManager::jumpToPreviousKeyFrame(){
 
 void VideoManager::toggleLoopSection(){
     videoControllers[activeVideo].toggleLoopSection();
+}
+
+void VideoManager::jumpToNextVideo(){
+    int nextVideo = activeVideo < videoControllers.size() ? activeVideo + 1 : activeVideo;
+    switchToVideo(nextVideo);
+}
+void VideoManager::jumpToPreviousVideo(){
+    int prevVideo = activeVideo != 0 ? activeVideo - 1 : activeVideo;
+    switchToVideo(prevVideo);
+
+}
+
+void VideoManager::switchToVideo(int videoNum){
+    activeVideo = videoNum;
+    for (int i = 0; i<videoControllers.size(); i++) {
+        videoControllers[i].setActive(false);
+    }
+    videoControllers[activeVideo].setActive(true);
 }
 
 ofFbo VideoManager::getRenderSurface(){

@@ -30,6 +30,10 @@ public:
     void jumpToPreviousKeyFrame();
     void toggleLoopSection();
     
+    void jumpToNextVideo();
+    void jumpToPreviousVideo();
+    void jumpToVideo(int videoID);
+    
     //ofVec2f ofGetDisplayScale();
 
     
@@ -49,5 +53,6 @@ private:
     
     vector<VideoController> videoControllers;
     void buildVideoControllers(ofXml *settings);
+    void switchToVideo(int videoNum);
     
 };

@@ -74,18 +74,18 @@ void VideoController::render(){
     float playHeadPos = videoFrame / totalFrames;
     //float videoTotalFrames = videoMain.getTotalNumFrames();
     
-    // PROGRESS BAR
+    // PLAYHEAD BAR
     ofNoFill();
     ofSetColor(255, 0, 0);
-    ofLine(position.x + (playHeadPos * size.x), position.y - 20, position.x + (playHeadPos * size.x), position.y + size.y + 20);
+    ofLine(position.x + (playHeadPos * size.x), position.y - 5, position.x + (playHeadPos * size.x), position.y + size.y + 5);
     ofDrawBitmapString(ofToString(videoFrame), position.x + (playHeadPos * size.x), position.y - 20);
     ofDrawBitmapString(ofToString(atKeyFrame), position.x + (playHeadPos * size.x), position.y - 40);
 
     ofSetColor(0, 255, 0);
     for (int i=0; i<keyFrames.size(); i++) {
-        float x= (keyFrames[i].frame / (float)totalFrames) * videoMain.width;
-        ofLine(x, -10, x, videoMain.height + 10);
-        ofDrawBitmapString(ofToString(i), x, 120);
+        float x= position.x + ((keyFrames[i].frame / (float)totalFrames) * size.x);
+        ofLine(x, position.y - 5, x, position.y + size.y + 5);
+        ofDrawBitmapString(ofToString(i), x, position.y + size.y);
     }
     
     if (sectionLoop) {
