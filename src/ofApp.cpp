@@ -48,6 +48,9 @@ void ofApp::keyPressed(int key){
         videoManager.jumpToPreviousKeyFrame();
     }
     if (key == 'w') {
+        videoManager.jumpBack();
+    }
+    if (key == 'e') {
         videoManager.jumpToNextKeyFrame();
     }
     
@@ -56,13 +59,13 @@ void ofApp::keyPressed(int key){
     }
     
     if (key == 'a') {
-        videoManager.jumpToPreviousVideo();
+        videoManager.switchToPreviousVideo();
     }
     if (key == 's') {
-        videoManager.jumpToNextVideo();
+        videoManager.switchToNextVideo();
     }
     
-    if(key == 's'){
+    if(key == ' '){
         //unsigned char *ledColor =  sampler.sampleLedStrip(0);
         
         // FIRST PIXEL OF FIRST LED

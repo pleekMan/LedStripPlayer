@@ -45,9 +45,8 @@ void VideoController::update(){
     
     if (isActive) {
         
-        if (getCurrentFrame() >= outFrame) {
+        if (getCurrentFrame() >= outFrame - 1) {
             if (sectionLoop) {
-                //updateKeyFrames(atKeyFrame);
                 jumpBack();
             } else {
                 updateKeyFrames(atKeyFrame + 1);
@@ -88,9 +87,7 @@ void VideoController::render(){
         ofDrawBitmapString(ofToString(i), x, position.y + size.y);
     }
     
-    if (sectionLoop) {
-        ofDrawBitmapString("LOOPING", 0, -60);
-    }
+    if (sectionLoop)ofDrawBitmapString("LOOPING", position.x , position.y - 10);
     
     // SOME GUI SHIT
     ofNoFill();
@@ -99,7 +96,7 @@ void VideoController::render(){
 }
 
 void VideoController::updateKeyFrames(int keyFrame){
-    atKeyFrame = atKeyFrame >= keyFrames.size() - 1 ? 0 : keyFrame;
+    atKeyFrame = atKeyFrame >= keyFrames.size() - 2 ? 0 : keyFrame;
     setInOutFrames(keyFrames[atKeyFrame].frame, keyFrames[atKeyFrame + 1].frame);
 
 }

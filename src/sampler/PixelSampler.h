@@ -24,13 +24,17 @@ public:
     void setSamplingSurface(ofFbo *_samplingSurface);
     void update();
     void render();
-    //unsigned char *sampleLedStrip(int ledStrip);
+    vector<ofColor> sampleLedStrip(int ledStrip);
+    void previewLedStrips();
+    
     
     int ledStripCount;
     vector<LedStrip> ledStrips;
     int totalLedCount;
     
     ofFbo *samplingSurface;
+    
+    
     
     
     

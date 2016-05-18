@@ -105,6 +105,7 @@ void VideoManager::render(){
         videoControllers[i].render();
     }
     
+    
     // SOME GUI SHIT
     ofNoFill();
     ofSetColor(0, 127, 127);
@@ -119,16 +120,19 @@ void VideoManager::jumpToNextKeyFrame(){
 void VideoManager::jumpToPreviousKeyFrame(){
     videoControllers[activeVideo].jumpToPreviousKeyFrame();
 }
+void VideoManager::jumpBack(){
+    videoControllers[activeVideo].jumpBack();
+}
 
 void VideoManager::toggleLoopSection(){
     videoControllers[activeVideo].toggleLoopSection();
 }
 
-void VideoManager::jumpToNextVideo(){
+void VideoManager::switchToNextVideo(){
     int nextVideo = activeVideo < videoControllers.size() ? activeVideo + 1 : activeVideo;
     switchToVideo(nextVideo);
 }
-void VideoManager::jumpToPreviousVideo(){
+void VideoManager::switchToPreviousVideo(){
     int prevVideo = activeVideo != 0 ? activeVideo - 1 : activeVideo;
     switchToVideo(prevVideo);
 
