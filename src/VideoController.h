@@ -37,14 +37,16 @@ public:
     void updateKeyFrames(int keyFrame);
     void toggleLoopSection();
     void setActive(bool state);
+    void setSelected(bool state);
 
     
-    ofVideoPlayer videoMain;
+    ofVideoPlayer video;
     vector<KeyFrame> keyFrames;
     int totalFrames;
     int atKeyFrame;
     int inFrame, outFrame;
     bool isActive;
+    bool isSelected;
     
     bool sectionLoop;
 
@@ -57,6 +59,8 @@ public:
     void setPosition(float _x, float _y);
     void setSize(float width, float height);
     
+    
+    bool checkKeyFrameSelection(); // RETURNS TRUE IF TIMELINE WAS CLICKED ON
     
     
 private:

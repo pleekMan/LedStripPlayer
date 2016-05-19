@@ -39,15 +39,22 @@ public:
 
     
     ofFbo renderSurface;
+    static ofVec2f renderSurfacePos;
     //static ofVec2f displayScale;
     
     int activeVideo;
+    int selectedVideo;
+    void selectVideo(int videoNum);
+    void trigger();
     
     ofXml settings;
     
     // GUI VARS
     ofVec2f guiAnchor;
     ofVec2f controllersSize;
+    
+    void mousePressed();
+    void keyPressed();
     
     
 private:

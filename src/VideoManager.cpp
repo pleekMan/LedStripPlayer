@@ -6,27 +6,30 @@
 //
 //
 
+
 #include "VideoManager.h"
 
+ofVec2f VideoManager::renderSurfacePos;
 
 void VideoManager::initialize(ofXml *_settings){
     
     guiAnchor = ofVec2f(50,50);
     controllersSize = ofVec2f(500,50);
     
-    activeVideo = 0;
 
     renderSurface.allocate(200, 100, GL_RGB);
     renderSurface.begin();
     ofClear(0);
     renderSurface.end();
+    renderSurfacePos = ofVec2f(ofGetWindowWidth() - renderSurface.getWidth(),0);
     
     //displayScale = ofVec2f(1.0);
     
     buildVideoControllers(_settings);
+    activeVideo = 0;
+    selectedVideo = 0;
     videoControllers[0].setActive(true);
-    
-    
+    videoControllers[0].setSelected(true);
     
 }
 
@@ -97,7 +100,7 @@ void VideoManager::update(){
 void VideoManager::render(){
     
     //
-    renderSurface.draw(700,10);
+    renderSurface.draw(renderSurfacePos);
     
     // RENDER GUI FOR EACH VIDEO
     ofSetColor(255);
@@ -125,7 +128,7 @@ void VideoManager::jumpBack(){
 }
 
 void VideoManager::toggleLoopSection(){
-    videoControllers[activeVideo].toggleLoopSection();
+    videoControllers[selectedVideo].toggleLoopSection();
 }
 
 void VideoManager::switchToNextVideo(){
@@ -148,4 +151,29 @@ void VideoManager::switchToVideo(int videoNum){
 
 ofFbo VideoManager::getRenderSurface(){
     return renderSurface;
+}
+
+void VideoManager::selectVideo(int videoNum){
+    for (int i=0; i < videoControllers.size(); i++) {
+        videoControllers[i].setSelected(false);
+    }
+    videoControllers[videoNum].setSelected(true);
+    selectedVideo = videoNum;
+}
+
+void VideoManager::trigger(){
+    switchToVideo(selectedVideo);
+}
+
+
+void VideoManager::mousePressed(){
+    
+    for (int i=0; i < videoControllers.size(); i++) {
+        cout << "Video: " << i << endl;
+        if(videoControllers[i].checkKeyFrameSelection()){
+            selectVideo(i);
+            break;
+        }
+    }
+    
 }

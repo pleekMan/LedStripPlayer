@@ -66,6 +66,8 @@ void ofApp::keyPressed(int key){
     }
     
     if(key == ' '){
+        
+        videoManager.trigger();
         //unsigned char *ledColor =  sampler.sampleLedStrip(0);
         
         // FIRST PIXEL OF FIRST LED
@@ -92,7 +94,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    videoManager.mousePressed();
 }
 
 //--------------------------------------------------------------

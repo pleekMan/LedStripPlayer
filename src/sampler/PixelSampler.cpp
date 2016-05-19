@@ -53,30 +53,9 @@ void PixelSampler::render(){
     
     previewLedStrips();
     
-    
-    /*
-    ofFill();
-    ofSetColor(0, 0, 255);
-    for (int i=0; i<ledStrips.size(); i++) {
-        for (int j=0; j<ledStrips[i].ledCount; j++) {
-            float x = ledStrips[i].getLedPosition(j).x;
-            float y = ledStrips[i].getLedPosition(j).y;
-            
-            //ofCircle(x * samplingSurface->getWidth() * VideoManager::displayScale.x, y * samplingSurface->getHeight() * VideoManager::displayScale.y, 1);
-        }
-    }
-    
-    //cout << ofToString(ledStrips.size()) << endl;
-    //samplingSurface->get
-    */
 }
 
 vector<ofColor> PixelSampler::sampleLedStrip(int ledStrip){
-    
-    //unsigned char charPixels[] = new char[ledStrips[ledStrip].getLedCount() * 3];
-    //unsigned char* pixels;
-    
-    //samplingSurface->readToPixels(pixels);
 
     ofPixels pix;
     samplingSurface->readToPixels(pix);
@@ -127,13 +106,16 @@ void PixelSampler::previewLedStrips(){
     }
     
     // SHOW STRIPS OVERLAYING SAMPLING-SURFACE
+    ofVec2f pos = ofVec2f(VideoManager::renderSurfacePos.x, VideoManager::renderSurfacePos.y);
+    ofVec2f size = ofVec2f(samplingSurface->getWidth(), samplingSurface->getHeight());
+    
     for (int i=0; i<ledStrips.size(); i++) {
         ofNoFill();
         ofSetColor(0, 255, 0);
         
         //ofVec2f start = ofVec2f(700 + (200 * ledStrips[i].start.x), 10 + (100 * ledStrips[i].start.y));
-        ofVec2f start = ofVec2f(700 + (200 * ledStrips[i].end.x), 10 + (100 * ledStrips[i].start.y));
-        ofVec2f end = ofVec2f(700 + (200 * ledStrips[i].end.x), 10 + (100 * ledStrips[i].end.y));
+        ofVec2f start = ofVec2f(pos.x + (size.x * ledStrips[i].end.x), pos.y + (size.y * ledStrips[i].start.y));
+        ofVec2f end = ofVec2f(pos.x + (size.x * ledStrips[i].end.x), pos.y + (size.y * ledStrips[i].end.y));
         
         ofLine(start.x, start.y, end.x, end.y);
 

@@ -11,10 +11,10 @@
 
 void VideoController::initialize(string videoPath, int _keyFrames[], int totalKeys, ofFbo *_renderSurface){
     
-    videoMain.loadMovie(videoPath);
-    videoMain.setLoopState(OF_LOOP_NORMAL);
-    videoMain.play();
-    videoMain.setPaused(true);
+    video.loadMovie(videoPath);
+    video.setLoopState(OF_LOOP_NORMAL);
+    video.play();
+    video.setPaused(true);
     
     cout << totalKeys<< " - " << sizeof(*_keyFrames) << endl;
     
@@ -29,10 +29,11 @@ void VideoController::initialize(string videoPath, int _keyFrames[], int totalKe
     atKeyFrame = keyFrames[0].frame;
     setInOutFrames(atKeyFrame,keyFrames[atKeyFrame + 1].frame); // WATCH OUT FOR LAST KEYFRAMES
     
-    totalFrames = videoMain.getTotalNumFrames();
+    totalFrames = video.getTotalNumFrames();
     
     sectionLoop = false;
     isActive = false;
+    isSelected = false;
     
     renderSurface = _renderSurface;
     
@@ -52,11 +53,13 @@ void VideoController::update(){
                 updateKeyFrames(atKeyFrame + 1);
             }
         }
+
         
+        // DRAW TO PIXEL SAMPLING FBO
         renderSurface->begin();
         
-        videoMain.update();
-        videoMain.draw(0,0);
+        video.update();
+        video.draw(0,0);
         
         
         renderSurface->end();
@@ -71,11 +74,22 @@ void VideoController::render(){
     
     float videoFrame = getCurrentFrame();
     float playHeadPos = videoFrame / totalFrames;
-    //float videoTotalFrames = videoMain.getTotalNumFrames();
+    //cout << "Frame: " << videoFrame <<  endl;
+    
+    // SOME GUI SHIT
+    
+    if(isSelected){
+        ofSetColor(70, 70, 0);
+        ofFill();
+    } else{
+        ofNoFill();
+        ofSetColor(20, 20, 0);
+    }
+    ofRect(position, size.x, size.y);
     
     // PLAYHEAD BAR
     ofNoFill();
-    ofSetColor(255, 0, 0);
+    ofSetColor(255, 255, 0);
     ofLine(position.x + (playHeadPos * size.x), position.y - 5, position.x + (playHeadPos * size.x), position.y + size.y + 5);
     ofDrawBitmapString(ofToString(videoFrame), position.x + (playHeadPos * size.x), position.y - 20);
     ofDrawBitmapString(ofToString(atKeyFrame), position.x + (playHeadPos * size.x), position.y - 40);
@@ -89,43 +103,45 @@ void VideoController::render(){
     
     if (sectionLoop)ofDrawBitmapString("LOOPING", position.x , position.y - 10);
     
-    // SOME GUI SHIT
-    ofNoFill();
-    ofSetColor(127, 0, 127);
-    ofRect(position, size.x, size.y);
+   
 }
 
 void VideoController::updateKeyFrames(int keyFrame){
-    atKeyFrame = atKeyFrame >= keyFrames.size() - 2 ? 0 : keyFrame;
-    setInOutFrames(keyFrames[atKeyFrame].frame, keyFrames[atKeyFrame + 1].frame);
+    
+    // IF VIDEO REACHED THE END
+    if (getCurrentFrame() >= getTotalFrames() - 1) {
+    //if (getCurrentFrame() >= 5) {
+        video.setPaused(true);
+        video.setFrame(getTotalFrames() - 1);
+    } else {
+        atKeyFrame = keyFrame;
+        setInOutFrames(keyFrames[atKeyFrame].frame, keyFrames[atKeyFrame + 1].frame);
+    }
 
 }
 
 void VideoController::jumpToNextKeyFrame(){
-    atKeyFrame = atKeyFrame >= keyFrames.size() - 1 ? 0 : atKeyFrame += 1;
-    setInOutFrames(keyFrames[atKeyFrame].frame, keyFrames[atKeyFrame + 1].frame);
-    videoMain.setFrame(inFrame);
-    /*
-     if (atKeyFrame >= keyFrames.size() - 1) {
-     atKeyFrame = 0;
-     } else {
-     atKeyFrame += 1;
-     }
-     */
-
+    if(atKeyFrame + 2 < keyFrames.size()){ // + 2, CUZ THE LAST FRAME OF THE VIDEO IS CONSIDERED A KEYFRAME
+        atKeyFrame += 1;
+        setInOutFrames(keyFrames[atKeyFrame].frame, keyFrames[atKeyFrame + 1].frame);
+        video.setFrame(inFrame);
+        video.play();
+    }
 }
 
 void VideoController::jumpToPreviousKeyFrame(){
-    atKeyFrame = atKeyFrame <= 0 ? keyFrames.size() - 2 : atKeyFrame -= 1;
-    setInOutFrames(keyFrames[atKeyFrame].frame, keyFrames[atKeyFrame + 1].frame);
-    videoMain.setFrame(inFrame);
-
+    if (atKeyFrame != 0) {
+        atKeyFrame -= 1;
+        setInOutFrames(keyFrames[atKeyFrame].frame, keyFrames[atKeyFrame + 1].frame);
+        video.setFrame(inFrame);
+        video.play();
+    }
 }
 
 void VideoController::jumpBack(){
-    //atKeyFrame = atKeyFrame <= 0 ? keyFrames.size() - 2 : atKeyFrame -= 1;
     setInOutFrames(keyFrames[atKeyFrame].frame, keyFrames[atKeyFrame + 1].frame);
-    videoMain.setFrame(inFrame);
+    video.setFrame(inFrame);
+    video.play();
     
 }
 
@@ -140,12 +156,12 @@ void VideoController::toggleLoopSection(){
 
 
 int VideoController::getCurrentFrame(){
-    return videoMain.getCurrentFrame();
+    return video.getCurrentFrame();
 }
 
 
 int VideoController::getTotalFrames(){
-    return videoMain.getTotalNumFrames();
+    return video.getTotalNumFrames();
 }
 
 void VideoController::setPosition(float _x, float _y){
@@ -159,11 +175,37 @@ void VideoController::setSize(float width, float height){
 void VideoController::setActive(bool state){
     isActive = state;
     if (isActive) {
-        videoMain.setPaused(false);
-        videoMain.play();
+        video.setPaused(false);
+        video.play();
     } else {
-        videoMain.setPaused(true);
+        video.setPaused(true);
     }
 }
+
+void VideoController::setSelected(bool state){
+    isSelected = state;
+}
+
+bool VideoController::checkKeyFrameSelection(){
+    
+    for (int i=0; i<keyFrames.size() - 1; i++) {
+        float keyX = position.x + ((keyFrames[i].frame / (float)totalFrames) * size.x);
+        float nextKeyX = position.x + ((keyFrames[i + 1].frame / (float)totalFrames) * size.x);
+        ofRectangle keyArea = ofRectangle(keyX, position.y, nextKeyX - keyX, size.y);
+        
+        if (keyArea.inside(ofGetMouseX(), ofGetMouseY())) {
+            updateKeyFrames(i);
+            video.setFrame(inFrame);
+            isSelected = true;
+            cout << "KeyFrame: " << i << " || IN: " << inFrame << " || OUT: " << outFrame << " || videoFrame: " << getCurrentFrame() << endl;
+            return true;
+            break;
+        }
+    }
+    return false;
+    
+}
+
+
 
 
