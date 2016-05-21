@@ -13,6 +13,7 @@
 		1CF23CA353F373B0D0183D7B /* VideoManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 99F196D7708B5047FF777BA3 /* VideoManager.cpp */; };
 		28090DEB5109115003E8F1C5 /* UdpSocketWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5928AA323F5C2690B06C837D /* UdpSocketWin.cpp */; };
 		483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78D67A00EB899FAC09430597 /* ofxLabel.cpp */; };
+		4AA6595C1CF0BF6200BC6A04 /* LedStripController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6595A1CF0BF6200BC6A04 /* LedStripController.cpp */; };
 		4AB1BB371CE7CD6A004BCC2E /* PixelSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB1BB351CE7CD6A004BCC2E /* PixelSampler.cpp */; };
 		4AB1BB3A1CE7D0B1004BCC2E /* LedStrip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AB1BB381CE7D0B1004BCC2E /* LedStrip.cpp */; };
 		4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */; };
@@ -117,6 +118,8 @@
 		3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtils.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/NetworkingUtils.cpp; sourceTree = SOURCE_ROOT; };
 		444657A12E59D0ED86981498 /* TimerListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = TimerListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/TimerListener.h; sourceTree = SOURCE_ROOT; };
 		48974F980F51769171D0B2F5 /* IpEndpointName.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = IpEndpointName.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h; sourceTree = SOURCE_ROOT; };
+		4AA6595A1CF0BF6200BC6A04 /* LedStripController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LedStripController.cpp; sourceTree = "<group>"; };
+		4AA6595B1CF0BF6200BC6A04 /* LedStripController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LedStripController.h; sourceTree = "<group>"; };
 		4AB1BB351CE7CD6A004BCC2E /* PixelSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PixelSampler.cpp; path = sampler/PixelSampler.cpp; sourceTree = "<group>"; };
 		4AB1BB361CE7CD6A004BCC2E /* PixelSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PixelSampler.h; path = sampler/PixelSampler.h; sourceTree = "<group>"; };
 		4AB1BB381CE7D0B1004BCC2E /* LedStrip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LedStrip.cpp; path = sampler/LedStrip.cpp; sourceTree = "<group>"; };
@@ -287,6 +290,15 @@
 				A763ED608B35AE3310251DEE /* src */,
 			);
 			name = ofxGui;
+			sourceTree = "<group>";
+		};
+		4AA659591CF0BF6200BC6A04 /* LedStripController */ = {
+			isa = PBXGroup;
+			children = (
+				4AA6595A1CF0BF6200BC6A04 /* LedStripController.cpp */,
+				4AA6595B1CF0BF6200BC6A04 /* LedStripController.h */,
+			);
+			path = LedStripController;
 			sourceTree = "<group>";
 		};
 		4AB1BB341CE7CCE7004BCC2E /* sampler */ = {
@@ -471,6 +483,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4AA659591CF0BF6200BC6A04 /* LedStripController */,
 				4AB1BB341CE7CCE7004BCC2E /* sampler */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
@@ -620,6 +633,7 @@
 				125506CD3E5F428AAFE5CC65 /* ofxTCPManager.cpp in Sources */,
 				66CA411C5A9664E27326BF36 /* ofxTCPServer.cpp in Sources */,
 				E2564CF7DDB3713772BB682E /* ofxUDPManager.cpp in Sources */,
+				4AA6595C1CF0BF6200BC6A04 /* LedStripController.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,

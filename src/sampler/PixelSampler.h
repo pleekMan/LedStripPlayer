@@ -25,7 +25,9 @@ public:
     void update();
     void render();
     vector<ofColor> sampleLedStrip(int ledStrip);
+    int getLedStripId(int ledStrip);
     void previewLedStrips();
+    int getLedStripCount();
     
     
     int ledStripCount;

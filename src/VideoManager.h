@@ -40,7 +40,7 @@ public:
     
     ofFbo renderSurface;
     static ofVec2f renderSurfacePos;
-    //static ofVec2f displayScale;
+    ofImage *thumbSelection;
     
     int activeVideo;
     int selectedVideo;
@@ -53,7 +53,7 @@ public:
     ofVec2f guiAnchor;
     ofVec2f controllersSize;
     
-    void mousePressed();
+    void mousePressed(int x, int y, int button);
     void keyPressed();
     
     

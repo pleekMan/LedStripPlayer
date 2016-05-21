@@ -31,6 +31,8 @@ void VideoManager::initialize(ofXml *_settings){
     videoControllers[0].setActive(true);
     videoControllers[0].setSelected(true);
     
+    thumbSelection = videoControllers[0].getThumbForKey(0);
+    
 }
 
 void VideoManager::buildVideoControllers(ofXml *settings){
@@ -45,8 +47,11 @@ void VideoManager::buildVideoControllers(ofXml *settings){
     for (int i=0; i<videoCount; i++) {
         VideoController newVideoController;
         
-        string videoPath = settings->getAttribute("path");
-        cout << ofToString(i) << " - " << videoPath << endl;
+        string folderPath = settings->getAttribute("path");
+        string videoName = settings->getAttribute("name");
+
+        cout << ofToString(i) << " -> Video Path: " << folderPath + videoName << endl;
+        
         
         int keyCount = settings->getNumChildren();
         int keys[keyCount];
@@ -59,7 +64,7 @@ void VideoManager::buildVideoControllers(ofXml *settings){
             settings->setToSibling();
         }
         
-        newVideoController.initialize(videoPath, keys, keyCount, &renderSurface);
+        newVideoController.initialize(folderPath, videoName, keys, keyCount, &renderSurface);
         newVideoController.setSize(controllersSize.x, controllersSize.y);
         ofVec2f pos = ofVec2f(guiAnchor.x + 10, guiAnchor.y + (i * (controllersSize.y + 50))); // EL +10 ES UN ESPACIO DE SEPARACION
         newVideoController.setPosition(pos.x, pos.y);
@@ -99,8 +104,8 @@ void VideoManager::update(){
 
 void VideoManager::render(){
     
-    //
     renderSurface.draw(renderSurfacePos);
+    thumbSelection->draw(renderSurfacePos.x, renderSurfacePos.y + renderSurface.getHeight());
     
     // RENDER GUI FOR EACH VIDEO
     ofSetColor(255);
@@ -166,13 +171,27 @@ void VideoManager::trigger(){
 }
 
 
-void VideoManager::mousePressed(){
+void VideoManager::mousePressed(int x, int y, int button){
     
-    for (int i=0; i < videoControllers.size(); i++) {
-        cout << "Video: " << i << endl;
-        if(videoControllers[i].checkKeyFrameSelection()){
-            selectVideo(i);
-            break;
+    // KEYFRAME SETTING + THUMBNAIL (IF RE-CLICKING ON ACTIVE VIDEO: JUMP TO SET KEYFRAME)
+    if (button == 0) {
+        for (int i=0; i < videoControllers.size(); i++) {
+            if(videoControllers[i].setKeyFrameSelection()){
+                selectVideo(i);
+                thumbSelection = videoControllers[i].getThumbForActiveKey();
+                break;
+            }
+        }
+    }
+    
+    // THUMBNAIL NAVIGATION AND VIDEO SELECTION (NO KEYFRAME SETTING)
+    if (button == 2) {
+        for (int i=0; i < videoControllers.size(); i++) {
+            int selectedKeyFrame = videoControllers[i].checkKeyFrameSelection();
+            if(selectedKeyFrame >= 0){
+                selectVideo(i);
+                thumbSelection = videoControllers[i].getThumbForKey(selectedKeyFrame);
+            }
         }
     }
     

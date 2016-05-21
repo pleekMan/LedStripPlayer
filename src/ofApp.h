@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-//#include "VideoManager.h"
+#include "LedStripController.h"
 #include "PixelSampler.h"
 
 class ofApp : public ofBaseApp{
@@ -23,6 +23,7 @@ class ofApp : public ofBaseApp{
 		
     VideoManager videoManager;
     PixelSampler sampler;
+    LedStripController ledStripController;
     
     ofXml settings;
     

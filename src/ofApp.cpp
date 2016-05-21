@@ -8,6 +8,7 @@ void ofApp::setup(){
     videoManager.initialize(&settings);
     sampler.initialize(&settings);
     sampler.setSamplingSurface(&videoManager.renderSurface);
+    ledStripController.setup();
 }
 
 
@@ -17,6 +18,14 @@ void ofApp::setup(){
 void ofApp::update(){
     videoManager.update();
     sampler.update();
+    
+    
+    ledStripController.update();
+    for (int i=0; i < sampler.getLedStripCount(); i++) {
+        vector<ofColor> cols = sampler.sampleLedStrip(i);
+        ledStripController.setLedStrip(i, cols);
+    }
+    
 }
 
 
@@ -26,13 +35,11 @@ void ofApp::draw(){
     ofBackground(50);
     
     
-    //ofPushMatrix();
-    //ofTranslate(100, 100);
     
     videoManager.render();
     sampler.render();
+    
 
-    //ofPopMatrix();
 }
 
 
@@ -94,7 +101,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    videoManager.mousePressed();
+    
+    videoManager.mousePressed(x,y,button);
 }
 
 //--------------------------------------------------------------

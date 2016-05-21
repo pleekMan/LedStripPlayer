@@ -24,7 +24,7 @@ class VideoController{
 public:
     VideoController(){};
     
-    void initialize(string videoPath, int _keyFrames[], int totalKeys, ofFbo *_renderSurface);
+    void initialize(string videoPath, string videoName, int _keyFrames[], int totalKeys, ofFbo *_renderSurface);
     void update();
     void render();
     
@@ -42,6 +42,7 @@ public:
     
     ofVideoPlayer video;
     vector<KeyFrame> keyFrames;
+    vector<ofImage> keyThumbs;
     int totalFrames;
     int atKeyFrame;
     int inFrame, outFrame;
@@ -60,7 +61,10 @@ public:
     void setSize(float width, float height);
     
     
-    bool checkKeyFrameSelection(); // RETURNS TRUE IF TIMELINE WAS CLICKED ON
+    bool setKeyFrameSelection(); // RETURNS TRUE IF TIMELINE WAS CLICKED ON
+    int checkKeyFrameSelection(); // RETURN KEY SELECTED, OR -1 IF NONE SELECTED
+    ofImage* getThumbForKey(int i);
+    ofImage* getThumbForActiveKey();
     
     
 private:

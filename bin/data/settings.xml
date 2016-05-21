@@ -15,12 +15,7 @@
 		<ledStrip xStart="0.95" yStart="0.6" xStop="0.95" yStop="0.2" ledCount="60" id="11"></ledStrip>		
 	</ledStrips>
 	<videos>
-		<video path="checkers.mov">
-			<keyFrame>0</keyFrame>
-			<keyFrame>25</keyFrame>
-			<keyFrame>50</keyFrame>
-		</video>
-		<video path="Aire y Niebla Test.mov">
+		<video path="videos/AireYNiebla/" name="Aire y Niebla Test.mov">
 			<keyFrame>0</keyFrame>
 			<keyFrame>170</keyFrame>
 			<keyFrame>184</keyFrame>
@@ -29,15 +24,19 @@
 			<keyFrame>706</keyFrame>
 			<keyFrame>875</keyFrame>
 		</video>
-		<video path="Aire_2.mov">
+		<video path="videos/AireYNiebla/" name="Aire y Niebla Test.mov">
 			<keyFrame>0</keyFrame>
-			<keyFrame>20</keyFrame>
-			<keyFrame>190</keyFrame>
-			<keyFrame>204</keyFrame>
-			<keyFrame>374</keyFrame>
-			<keyFrame>556</keyFrame>
-			<keyFrame>726</keyFrame>
-			<keyFrame>895</keyFrame>
+			<keyFrame>170</keyFrame>
+			<keyFrame>184</keyFrame>
+			<keyFrame>354</keyFrame>
+			<keyFrame>536</keyFrame>
+			<keyFrame>706</keyFrame>
+			<keyFrame>875</keyFrame>
 		</video>
+		<video path="videos/Waves/" name="Waves_blueGreen.mov">
+			<keyFrame>0</keyFrame>
+			<keyFrame>50</keyFrame>
+		</video>
+		
 	</videos>
 </settings>

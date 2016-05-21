@@ -32,3 +32,7 @@ ofPoint LedStrip::getLedPosition(int led){
 int LedStrip::getLedCount(){
     return ledCount;
 }
+
+int LedStrip::getId(){
+    return ID;
+}

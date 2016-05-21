@@ -3,18 +3,13 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "LedStripController::setLedStrip(int, std::vector&lt;ofColor_&lt;unsigned char&gt;, std::allocator&lt;ofColor_&lt;unsigned char&gt; &gt; &gt;&amp;):LedStripController.cpp">
+      </ContextState>
+      <ContextState
          contextName = "VideoController::checkKeyFrameSelection():VideoController.cpp">
       </ContextState>
       <ContextState
-         contextName = "VideoController::setInOutFrames(int, int):VideoController.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "VideoController::updateKeyFrames(int):VideoController.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "getCurrentFrame()">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "VideoManager::render():VideoManager.cpp">
       </ContextState>
       <ContextState
          contextName = "VideoController::update():VideoController.cpp">
@@ -26,6 +21,67 @@
                value = "getCurrentFrame()">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "VideoController::initialize(std::string, std::string, int*, int, ofFbo*):VideoController.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "ofDirectory::doesDirectoryExist(thumbsDir + ofToString(i) + &quot;.png&quot;)">
+            </PersistentString>
+            <PersistentString
+               value = "thumbsDir + ofToString(i) + &quot;.png&quot;">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "VideoManager::mousePressed(int, int, int):VideoManager.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "videoControllers[i].atKeyFrame">
+            </PersistentString>
+            <PersistentString
+               value = "videoControllers[i]">
+            </PersistentString>
+            <PersistentString
+               value = "videoControllers[i].getThumbForKey(videoControllers[i].atKeyFrame)">
+            </PersistentString>
+            <PersistentString
+               value = "keyThumbs">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LedStripController::setup():LedStripController.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "VideoManager::initialize(ofXml*):VideoManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "VideoController::getThumbForActiveKey():VideoController.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "keyThumbs[atKeyFrame]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "VideoController::getThumbForKey(int):VideoController.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "keyFrames[i].frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "VideoController::updateKeyFrames(int):VideoController.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "getCurrentFrame()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "VideoController::setInOutFrames(int, int):VideoController.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

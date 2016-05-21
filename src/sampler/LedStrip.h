@@ -26,6 +26,7 @@ public:
     
     ofPoint getLedPosition(int led);
     int getLedCount();
+    int getId();
     
     
     

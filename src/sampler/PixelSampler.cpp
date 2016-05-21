@@ -76,6 +76,10 @@ vector<ofColor> PixelSampler::sampleLedStrip(int ledStrip){
     return ledsColor;
 }
 
+int PixelSampler::getLedStripId(int ledStrip){
+    return ledStrips[ledStrip].getId();
+}
+
 void PixelSampler::previewLedStrips(){
     //int i = 2;
     
@@ -85,6 +89,8 @@ void PixelSampler::previewLedStrips(){
     ofFill();
     ofSetColor(0);
     ofRect(previewPos.x, previewPos.y,  previewSize.x, previewSize.y);
+    
+    
     
     for (int i=0; i<ledStrips.size(); i++) {
         
@@ -104,6 +110,7 @@ void PixelSampler::previewLedStrips(){
         }
         
     }
+     
     
     // SHOW STRIPS OVERLAYING SAMPLING-SURFACE
     ofVec2f pos = ofVec2f(VideoManager::renderSurfacePos.x, VideoManager::renderSurfacePos.y);
@@ -122,6 +129,10 @@ void PixelSampler::previewLedStrips(){
         
         
     }
+}
+
+int PixelSampler::getLedStripCount(){
+    return ledStrips.size();
 }
 
 /*

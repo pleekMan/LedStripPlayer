@@ -7,15 +7,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "No"
-            ignoreCount = "9"
+            ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "src/VideoController.cpp"
-            timestampString = "485316483.461504"
+            filePath = "src/VideoManager.cpp"
+            timestampString = "485557166.574803"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "VideoController::updateKeyFrames(int keyFrame)"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "VideoManager::render()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -23,15 +23,31 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "No"
-            ignoreCount = "1"
+            ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/VideoController.cpp"
-            timestampString = "485315844.290654"
+            timestampString = "485556515.55596"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "VideoController::update()"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "VideoController::initialize(string videoPath, string videoName, int _keyFrames[], int totalKeys, ofFbo *_renderSurface)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/VideoManager.cpp"
+            timestampString = "485559932.090739"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
+            landmarkName = "VideoManager::mousePressed(int x, int y, int button)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

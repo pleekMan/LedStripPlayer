@@ -9,22 +9,32 @@
 #include "VideoController.h"
 
 
-void VideoController::initialize(string videoPath, int _keyFrames[], int totalKeys, ofFbo *_renderSurface){
+void VideoController::initialize(string videoPath, string videoName, int _keyFrames[], int totalKeys, ofFbo *_renderSurface){
     
-    video.loadMovie(videoPath);
-    video.setLoopState(OF_LOOP_NORMAL);
+    video.loadMovie(videoPath + videoName);
+    video.setLoopState(OF_LOOP_NONE);
     video.play();
     video.setPaused(true);
     
     cout << totalKeys<< " - " << sizeof(*_keyFrames) << endl;
     
-    
+    //LOAD KEYFRAME DATA
     for (int i=0; i< totalKeys; i++) {
         KeyFrame newKeyFrame;
         newKeyFrame.frame = _keyFrames[i];
         newKeyFrame.name = ofToString(newKeyFrame.frame);
         keyFrames.push_back(newKeyFrame);
     }
+    
+    // LOAD KEYFRAME THUMBNAILS
+    string thumbsDir = videoPath + "thumbs/";
+    for (int i=0; ofDirectory::doesDirectoryExist(thumbsDir + ofToString(i) + ".png"); i++) {
+            ofImage newImage;
+            newImage.loadImage(thumbsDir + ofToString(i) + ".png");
+            keyThumbs.push_back(newImage);
+    }
+
+
     
     atKeyFrame = keyFrames[0].frame;
     setInOutFrames(atKeyFrame,keyFrames[atKeyFrame + 1].frame); // WATCH OUT FOR LAST KEYFRAMES
@@ -103,7 +113,8 @@ void VideoController::render(){
     
     if (sectionLoop)ofDrawBitmapString("LOOPING", position.x , position.y - 10);
     
-   
+    
+    
 }
 
 void VideoController::updateKeyFrames(int keyFrame){
@@ -186,7 +197,7 @@ void VideoController::setSelected(bool state){
     isSelected = state;
 }
 
-bool VideoController::checkKeyFrameSelection(){
+bool VideoController::setKeyFrameSelection(){
     
     for (int i=0; i<keyFrames.size() - 1; i++) {
         float keyX = position.x + ((keyFrames[i].frame / (float)totalFrames) * size.x);
@@ -204,6 +215,32 @@ bool VideoController::checkKeyFrameSelection(){
     }
     return false;
     
+}
+
+int VideoController::checkKeyFrameSelection(){
+    
+    int keySelected = -1;
+    
+    for (int i=0; i<keyFrames.size() - 1; i++) {
+        float keyX = position.x + ((keyFrames[i].frame / (float)totalFrames) * size.x);
+        float nextKeyX = position.x + ((keyFrames[i + 1].frame / (float)totalFrames) * size.x);
+        ofRectangle keyArea = ofRectangle(keyX, position.y, nextKeyX - keyX, size.y);
+        
+            if (keyArea.inside(ofGetMouseX(), ofGetMouseY())) {
+                keySelected = i;
+                break;
+            }
+    }
+    
+    return keySelected;
+}
+
+ofImage* VideoController::getThumbForKey(int i){
+    return &keyThumbs[i];
+}
+
+ofImage* VideoController::getThumbForActiveKey(){
+    return &keyThumbs[atKeyFrame];
 }
 
 
