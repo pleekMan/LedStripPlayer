@@ -49,6 +49,8 @@ public:
     bool isActive;
     bool isSelected;
     
+    string description;
+    
     bool sectionLoop;
 
     ofFbo *renderSurface;
@@ -56,9 +58,11 @@ public:
     // GUI vars
     ofVec2f position;
     ofVec2f size;
+    int ID;
     
     void setPosition(float _x, float _y);
     void setSize(float width, float height);
+    void setID(int _ID);
     
     
     bool setKeyFrameSelection(); // RETURNS TRUE IF TIMELINE WAS CLICKED ON

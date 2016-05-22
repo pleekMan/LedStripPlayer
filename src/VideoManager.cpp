@@ -10,18 +10,22 @@
 #include "VideoManager.h"
 
 ofVec2f VideoManager::renderSurfacePos;
+ofVec2f VideoManager::renderSurfaceScale;
 
 void VideoManager::initialize(ofXml *_settings){
     
-    guiAnchor = ofVec2f(50,50);
-    controllersSize = ofVec2f(500,50);
+    timelineScrollerY = 0;
+    guiAnchor = ofVec2f(30,50);
+    controllersSize = ofVec2f(1010 - 50,15);
+    
     
 
     renderSurface.allocate(200, 100, GL_RGB);
     renderSurface.begin();
     ofClear(0);
     renderSurface.end();
-    renderSurfacePos = ofVec2f(ofGetWindowWidth() - renderSurface.getWidth(),0);
+    renderSurfacePos = ofVec2f(1375, 445);
+    renderSurfaceScale = ofVec2f(1.4,1.3);
     
     //displayScale = ofVec2f(1.0);
     
@@ -49,6 +53,7 @@ void VideoManager::buildVideoControllers(ofXml *settings){
         
         string folderPath = settings->getAttribute("path");
         string videoName = settings->getAttribute("name");
+        newVideoController.setID(i);
 
         cout << ofToString(i) << " -> Video Path: " << folderPath + videoName << endl;
         
@@ -66,7 +71,7 @@ void VideoManager::buildVideoControllers(ofXml *settings){
         
         newVideoController.initialize(folderPath, videoName, keys, keyCount, &renderSurface);
         newVideoController.setSize(controllersSize.x, controllersSize.y);
-        ofVec2f pos = ofVec2f(guiAnchor.x + 10, guiAnchor.y + (i * (controllersSize.y + 50))); // EL +10 ES UN ESPACIO DE SEPARACION
+        ofVec2f pos = ofVec2f(guiAnchor.x, guiAnchor.y + (i * (controllersSize.y + 60))); // EL +10 ES UN ESPACIO DE SEPARACION
         newVideoController.setPosition(pos.x, pos.y);
         
         videoControllers.push_back(newVideoController);
@@ -104,8 +109,13 @@ void VideoManager::update(){
 
 void VideoManager::render(){
     
-    renderSurface.draw(renderSurfacePos);
-    thumbSelection->draw(renderSurfacePos.x, renderSurfacePos.y + renderSurface.getHeight());
+    // DRAW RENDER SURFACE SAMPLER & THUMB SELECTION
+    ofPushMatrix();
+    ofTranslate(renderSurfacePos.x, renderSurfacePos.y);
+    ofScale(renderSurfaceScale.x, renderSurfaceScale.y);
+        renderSurface.draw(0,0);
+    ofPopMatrix();
+    thumbSelection->draw(1065, 445, 280, 130);
     
     // RENDER GUI FOR EACH VIDEO
     ofSetColor(255);
@@ -115,10 +125,19 @@ void VideoManager::render(){
     
     
     // SOME GUI SHIT
+    // TIMELINE SCROLLER
+    ofNoFill();
+    ofSetColor(140, 140, 200);
+    ofRect(1030, 0, 15, ofGetHeight());
+    ofFill();
+    ofRect(ofPoint(1030,timelineScrollerY), 15, 15);
+    
+    
+    /*
     ofNoFill();
     ofSetColor(0, 127, 127);
     ofRect(guiAnchor, 700,700);
-    
+    */
 }
 
 void VideoManager::jumpToNextKeyFrame(){
@@ -170,10 +189,18 @@ void VideoManager::trigger(){
     switchToVideo(selectedVideo);
 }
 
+void VideoManager::scrollTimeline(){
+    guiAnchor.y = 30 + ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, -(ofGetHeight() * 0.25));
+    for (int i=0; i<videoControllers.size(); i++) {
+        ofVec2f pos = ofVec2f(guiAnchor.x, guiAnchor.y + (i * (controllersSize.y + 60))); // EL +10 ES UN ESPACIO DE SEPARACION
+        videoControllers[i].setPosition(pos.x,pos.y);
+    }
+}
+
 
 void VideoManager::mousePressed(int x, int y, int button){
     
-    // KEYFRAME SETTING + THUMBNAIL (IF RE-CLICKING ON ACTIVE VIDEO: JUMP TO SET KEYFRAME)
+    // KEYFRAME SETTING + THUMBNAIL (IF RE-CLICKING ON ACTIVE VIDEO: JUMP TO SETED KEYFRAME)
     if (button == 0) {
         for (int i=0; i < videoControllers.size(); i++) {
             if(videoControllers[i].setKeyFrameSelection()){
@@ -184,7 +211,7 @@ void VideoManager::mousePressed(int x, int y, int button){
         }
     }
     
-    // THUMBNAIL NAVIGATION AND VIDEO SELECTION (NO KEYFRAME SETTING)
+    // THUMBNAIL NAVIGATION AND VIDEO SELECTION (NO KEYFRAME SETTING OR JUMPING)
     if (button == 2) {
         for (int i=0; i < videoControllers.size(); i++) {
             int selectedKeyFrame = videoControllers[i].checkKeyFrameSelection();
@@ -194,5 +221,15 @@ void VideoManager::mousePressed(int x, int y, int button){
             }
         }
     }
+    
+}
+
+void VideoManager::mouseDragged(int x, int y, int button){
+    
+    if (ofGetMouseX() > 1030 && ofGetMouseX() < 1045) {
+        timelineScrollerY = ofGetMouseY();
+        scrollTimeline();
+    }
+    
     
 }

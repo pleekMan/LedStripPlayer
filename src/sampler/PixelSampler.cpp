@@ -81,10 +81,9 @@ int PixelSampler::getLedStripId(int ledStrip){
 }
 
 void PixelSampler::previewLedStrips(){
-    //int i = 2;
     
-    ofVec2f previewSize = ofVec2f(500,250);
-    ofVec2f previewPos = ofVec2f(ofGetWindowWidth(),ofGetWindowHeight()) - previewSize;
+    ofVec2f previewSize = ofVec2f(590,281);
+    ofVec2f previewPos = ofVec2f(1065,102);
 
     ofFill();
     ofSetColor(0);
@@ -114,7 +113,7 @@ void PixelSampler::previewLedStrips(){
     
     // SHOW STRIPS OVERLAYING SAMPLING-SURFACE
     ofVec2f pos = ofVec2f(VideoManager::renderSurfacePos.x, VideoManager::renderSurfacePos.y);
-    ofVec2f size = ofVec2f(samplingSurface->getWidth(), samplingSurface->getHeight());
+    ofVec2f size = ofVec2f(samplingSurface->getWidth(), samplingSurface->getHeight()) * VideoManager::renderSurfaceScale;
     
     for (int i=0; i<ledStrips.size(); i++) {
         ofNoFill();

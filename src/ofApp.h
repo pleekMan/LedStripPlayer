@@ -27,5 +27,9 @@ class ofApp : public ofBaseApp{
     
     ofXml settings;
     
+    ofImage backgroundImage;
     
+private:
+    
+    void showMouseCoordinates();
 };

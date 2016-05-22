@@ -12,6 +12,7 @@
 #include <iostream>
 #include "ofMain.h"
 #include "VideoController.h"
+#include "ofxGui.h"
 
 #endif /* defined(__LedStripPlayer__VideoManager__) */
 
@@ -40,6 +41,7 @@ public:
     
     ofFbo renderSurface;
     static ofVec2f renderSurfacePos;
+    static ofVec2f renderSurfaceScale;
     ofImage *thumbSelection;
     
     int activeVideo;
@@ -52,8 +54,10 @@ public:
     // GUI VARS
     ofVec2f guiAnchor;
     ofVec2f controllersSize;
+    float timelineScrollerY;
     
     void mousePressed(int x, int y, int button);
+    void mouseDragged(int x, int y, int button);
     void keyPressed();
     
     
@@ -62,5 +66,6 @@ private:
     vector<VideoController> videoControllers;
     void buildVideoControllers(ofXml *settings);
     //void switchToVideo(int videoNum);
+    void scrollTimeline();
     
 };

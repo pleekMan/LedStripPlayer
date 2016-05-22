@@ -9,6 +9,8 @@ void ofApp::setup(){
     sampler.initialize(&settings);
     sampler.setSamplingSurface(&videoManager.renderSurface);
     ledStripController.setup();
+    
+    backgroundImage.loadImage("gui/Fondo.png");
 }
 
 
@@ -16,6 +18,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    
     videoManager.update();
     sampler.update();
     
@@ -32,17 +36,30 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(50);
-    
+    ofClear(50);
+    backgroundImage.draw(0,0);
     
     
     videoManager.render();
     sampler.render();
     
+    showMouseCoordinates();
+
+    
 
 }
 
-
+void ofApp::showMouseCoordinates(){
+    ofPushStyle();
+    ofSetColor(255, 0, 0);
+    ofFill();
+    
+    ofDrawBitmapString("x" + ofToString(ofGetMouseX()) + " :: y" + ofToString(ofGetMouseY()), ofGetMouseX() - 100, ofGetMouseY() - 5);
+    
+    
+    ofPopStyle();
+    
+}
 
 
 
@@ -96,7 +113,7 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    videoManager.mouseDragged(x, y, button);
 }
 
 //--------------------------------------------------------------

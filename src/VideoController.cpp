@@ -18,6 +18,8 @@ void VideoController::initialize(string videoPath, string videoName, int _keyFra
     
     cout << totalKeys<< " - " << sizeof(*_keyFrames) << endl;
     
+    description = videoName;
+    
     //LOAD KEYFRAME DATA
     for (int i=0; i< totalKeys; i++) {
         KeyFrame newKeyFrame;
@@ -88,30 +90,78 @@ void VideoController::render(){
     
     // SOME GUI SHIT
     
-    if(isSelected){
-        ofSetColor(70, 70, 0);
+    // TIMELINE BACKGROUND
+    if (isActive) {
         ofFill();
-    } else{
+        ofSetColor(70,70,70);
+        ofRect(0, position.y - 30, 1030, 75);
+    }
+    if (isSelected) {
         ofNoFill();
-        ofSetColor(20, 20, 0);
+        ofSetColor(232, 70, 80);
+        ofLine(0, position.y - 30, 1030, position.y - 30);
+        ofLine(0, position.y + 45, 1030, position.y + 45);
+    }
+    
+    // TIMELINE PROGRESS BAR
+    ofFill();
+    if(isActive){
+        ofSetColor(10,180,190);
+    } else{
+        ofSetColor(0,100,100);
     }
     ofRect(position, size.x, size.y);
     
-    // PLAYHEAD BAR
-    ofNoFill();
-    ofSetColor(255, 255, 0);
-    ofLine(position.x + (playHeadPos * size.x), position.y - 5, position.x + (playHeadPos * size.x), position.y + size.y + 5);
-    ofDrawBitmapString(ofToString(videoFrame), position.x + (playHeadPos * size.x), position.y - 20);
-    ofDrawBitmapString(ofToString(atKeyFrame), position.x + (playHeadPos * size.x), position.y - 40);
 
-    ofSetColor(0, 255, 0);
+    
+    // NAME + ID
+    ofSetColor(10,130, 140);
+    ofRect(position.x, position.y, -20, size.y);
+    ofSetColor(255);
+    ofDrawBitmapString(description, ofPoint(position.x + 20, position.y + size.y - 3));
+    ofDrawBitmapString(ofToString(ID), ofPoint(position.x - 15, position.y + size.y - 3));
+    
+    
+    // DRAW KEYFRAMES
     for (int i=0; i<keyFrames.size(); i++) {
         float x= position.x + ((keyFrames[i].frame / (float)totalFrames) * size.x);
-        ofLine(x, position.y - 5, x, position.y + size.y + 5);
-        ofDrawBitmapString(ofToString(i), x, position.y + size.y);
+        float y = position.y - 3;
+        
+        if (atKeyFrame == i) {
+            ofSetColor(230, 70, 80);
+        } else {
+            ofSetColor(30, 120, 190);
+        }
+        ofFill();
+        ofRect(x, y - 15, 20, 15);
+
+        ofSetColor(255);
+        ofLine(x, position.y  + size.y, x, y - 15);
+        
+        ofDrawBitmapString(ofToString(i), x + 3, y - 3);
     }
     
-    if (sectionLoop)ofDrawBitmapString("LOOPING", position.x , position.y - 10);
+    // PLAYHEAD BAR
+    //ofNoFill();
+    ofSetColor(230, 70, 80);
+    ofSetLineWidth(3);
+    float headX = position.x + (playHeadPos * size.x);
+    ofLine(headX, position.y + size.y, headX, position.y - 18);
+    ofSetLineWidth(1);
+    ofRect(headX, position.y - 3, 15, 3);
+    
+    ofSetColor(255);
+    ofDrawBitmapString(ofToString(atKeyFrame), headX + 3, position.y - 6);
+
+    ofDrawBitmapString(ofToString(videoFrame), headX + 3, position.y + size.y - 3);
+    
+    
+    if (sectionLoop){
+        ofSetColor(230, 70, 80);
+        ofRect(position.x, position.y + size.y, 80, 18);
+        ofSetColor(255);
+        ofDrawBitmapString("LOOPING", position.x + 5, position.y + size.y + 14);
+    }
     
     
     
@@ -181,6 +231,10 @@ void VideoController::setPosition(float _x, float _y){
 
 void VideoController::setSize(float width, float height){
     size.set(width, height);
+}
+
+void VideoController::setID(int _ID){
+    ID = _ID;
 }
 
 void VideoController::setActive(bool state){
