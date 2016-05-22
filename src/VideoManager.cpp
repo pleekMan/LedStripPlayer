@@ -36,6 +36,7 @@ void VideoManager::initialize(ofXml *_settings){
     videoControllers[0].setSelected(true);
     
     thumbSelection = videoControllers[0].getThumbForKey(0);
+    noThumbnailImage.loadImage("gui/noThumbnail.png");
     
 }
 
@@ -115,8 +116,13 @@ void VideoManager::render(){
     ofScale(renderSurfaceScale.x, renderSurfaceScale.y);
         renderSurface.draw(0,0);
     ofPopMatrix();
-    thumbSelection->draw(1065, 445, 280, 130);
     
+    // DRAW THUMB SELECTION
+    if(thumbSelection->isAllocated()){
+        thumbSelection->draw(1065, 445, 280, 130);
+    } else {
+        noThumbnailImage.draw(1130, 470);
+    }
     // RENDER GUI FOR EACH VIDEO
     ofSetColor(255);
     for (int i=0; i<videoControllers.size(); i++) {
@@ -171,6 +177,7 @@ void VideoManager::switchToVideo(int videoNum){
         videoControllers[i].setActive(false);
     }
     videoControllers[activeVideo].setActive(true);
+    videoControllers[activeVideo].setPaused(false);
 }
 
 ofFbo VideoManager::getRenderSurface(){
@@ -194,6 +201,16 @@ void VideoManager::scrollTimeline(){
     for (int i=0; i<videoControllers.size(); i++) {
         ofVec2f pos = ofVec2f(guiAnchor.x, guiAnchor.y + (i * (controllersSize.y + 60))); // EL +10 ES UN ESPACIO DE SEPARACION
         videoControllers[i].setPosition(pos.x,pos.y);
+    }
+}
+
+void VideoManager::keyPressed(char key){
+    if (key == ' ') {
+        if (selectedVideo == activeVideo) {
+            videoControllers[activeVideo].setPaused(!videoControllers[activeVideo].isPaused());
+        } else {
+            trigger();
+        }
     }
 }
 

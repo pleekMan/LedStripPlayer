@@ -15,7 +15,7 @@
 		<ledStrip xStart="0.95" yStart="0.6" xStop="0.95" yStop="0.2" ledCount="60" id="11"></ledStrip>		
 	</ledStrips>
 	<videos>
-		<video path="videos/AireYNiebla/" name="Aire y Niebla Test.mov">
+		<video path="videos/AireYNiebla/" name="Aire y Niebla Test_noSound.mov">
 			<keyFrame>0</keyFrame>
 			<keyFrame>170</keyFrame>
 			<keyFrame>184</keyFrame>

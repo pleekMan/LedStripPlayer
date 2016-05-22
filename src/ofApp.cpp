@@ -50,13 +50,12 @@ void ofApp::draw(){
 }
 
 void ofApp::showMouseCoordinates(){
+    int xOffset = ofGetMouseX() < ofGetWidth() * 0.5 ? 10 : -120;
+    int yOffset = ofGetMouseY() < ofGetHeight() * 0.5 ? 10 : -10;
     ofPushStyle();
     ofSetColor(255, 0, 0);
     ofFill();
-    
-    ofDrawBitmapString("x" + ofToString(ofGetMouseX()) + " :: y" + ofToString(ofGetMouseY()), ofGetMouseX() - 100, ofGetMouseY() - 5);
-    
-    
+    ofDrawBitmapString("x" + ofToString(ofGetMouseX()) + " :: y" + ofToString(ofGetMouseY()), ofGetMouseX() + xOffset, ofGetMouseY() + yOffset);
     ofPopStyle();
     
 }
@@ -90,13 +89,7 @@ void ofApp::keyPressed(int key){
     }
     
     if(key == ' '){
-        
-        videoManager.trigger();
-        //unsigned char *ledColor =  sampler.sampleLedStrip(0);
-        
-        // FIRST PIXEL OF FIRST LED
-        //cout << ledColor[0] << " - " << ledColor[1] << " - " << ledColor[2] << endl;
-        
+        videoManager.keyPressed(key);
     }
 
 }

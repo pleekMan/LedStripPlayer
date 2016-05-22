@@ -34,6 +34,8 @@ public:
     void jumpToNextKeyFrame();
     void jumpToPreviousKeyFrame();
     void jumpBack();
+    void setPaused(bool state);
+    bool isPaused();
     void updateKeyFrames(int keyFrame);
     void toggleLoopSection();
     void setActive(bool state);

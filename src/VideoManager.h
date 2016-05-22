@@ -12,7 +12,6 @@
 #include <iostream>
 #include "ofMain.h"
 #include "VideoController.h"
-#include "ofxGui.h"
 
 #endif /* defined(__LedStripPlayer__VideoManager__) */
 
@@ -55,10 +54,11 @@ public:
     ofVec2f guiAnchor;
     ofVec2f controllersSize;
     float timelineScrollerY;
+    ofImage noThumbnailImage;
     
     void mousePressed(int x, int y, int button);
     void mouseDragged(int x, int y, int button);
-    void keyPressed();
+    void keyPressed(char key);
     
     
 private:

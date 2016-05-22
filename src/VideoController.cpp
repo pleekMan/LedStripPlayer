@@ -73,7 +73,6 @@ void VideoController::update(){
         video.update();
         video.draw(0,0);
         
-        
         renderSurface->end();
     
     }
@@ -99,9 +98,18 @@ void VideoController::render(){
     if (isSelected) {
         ofNoFill();
         ofSetColor(232, 70, 80);
+        ofSetLineWidth(4);
         ofLine(0, position.y - 30, 1030, position.y - 30);
         ofLine(0, position.y + 45, 1030, position.y + 45);
+        
+        ofSetColor(150, 30,40);
+        ofLine(0, position.y - 28, 1030, position.y - 28);
+        ofLine(0, position.y + 43, 1030, position.y + 43);
+        
+        ofSetLineWidth(1);
     }
+    ofSetColor(70,70,70);
+    ofLine(position.x, position.y + 45, position.x + size.x, position.y + 45);
     
     // TIMELINE PROGRESS BAR
     ofFill();
@@ -167,10 +175,17 @@ void VideoController::render(){
     
 }
 
+void VideoController::setPaused(bool state){
+    video.setPaused(state);
+}
+bool VideoController::isPaused(){
+    return video.isPaused();
+}
+
 void VideoController::updateKeyFrames(int keyFrame){
     
     // IF VIDEO REACHED THE END
-    if (getCurrentFrame() >= getTotalFrames() - 1) {
+    if (getCurrentFrame() >= getTotalFrames() - 2) { // FLASHEA (O CODEE ALGO MAL, SI LLEGA HASTA EL ULTIMO FRAME POSTA)
     //if (getCurrentFrame() >= 5) {
         video.setPaused(true);
         video.setFrame(getTotalFrames() - 1);
